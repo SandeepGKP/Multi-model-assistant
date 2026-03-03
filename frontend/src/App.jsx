@@ -13,7 +13,7 @@ function App() {
   const handleShowAnswer = (answer,questions) => {
     if (!answer) return;
     // setQuestion(questions.charAt(0).toUpperCase() + questions.slice(1)); // Capitalize first letter of question
-    setAnswers((prev) => [...prev, "-------------------------\n\n--------------------------------", questions.charAt(0).toUpperCase() + questions.slice(1)+" ?", answer]);
+    setAnswers((prev) => [...prev, "-------------------------\n\n--------------------------------", questions.charAt(0).toUpperCase() + questions.slice(1), answer]);
   };
 
   // Auto-scroll when a new answer is added
