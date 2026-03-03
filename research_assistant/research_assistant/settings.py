@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-rxgzl9-z%ao@0!7*t_y(v(#hee(4i7l)a@i@9$)qk&z#y&gi2^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["multi-model-assistant.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["https://multi-model-assistant.onrender.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
