@@ -30,7 +30,7 @@ function Chat({ viewAnswer, setIsLoading }) {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                import.meta.env.VITE_BACKEND_URL + "/api/upload/",  // ✅ FIXED
+                import.meta.env.VITE_BACKEND_URL + "api/upload/",  // ✅ FIXED
                 formData,
                 {
                     headers: {
@@ -70,7 +70,7 @@ function Chat({ viewAnswer, setIsLoading }) {
         try {
             setIsLoading(true);
             const res = await axios.post(
-                import.meta.env.VITE_BACKEND_URL + "/api/ask/",   // ✅ FIXED
+                import.meta.env.VITE_BACKEND_URL + "api/ask/",   // ✅ FIXED
                 { question: questionToAsk }
             );
 
