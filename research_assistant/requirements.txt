@@ -19,9 +19,7 @@ openai==2.24.0
 groq==1.0.0
 google-genai==1.65.0
 faiss-cpu==1.13.2
-
-# Use CPU-only PyTorch to avoid Render GPU issues
-torch==2.2.0+cpu --find-links https://download.pytorch.org/whl/cpu/torch_stable.html
+torch==2.10.0
 sentence-transformers==2.2.2
 transformers==5.2.0
 scikit-learn==1.8.0
