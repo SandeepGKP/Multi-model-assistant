@@ -124,4 +124,5 @@ STATIC_URL = 'static/'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173", # Vite development server
     "http://127.0.0.1:5173",
+    "https://multi-model-assistant-1.onrender.com"
 ]
