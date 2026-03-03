@@ -1,9 +1,11 @@
 # rag/embeddings.py
+
 from sentence_transformers import SentenceTransformer
 
-# Load model once
-model = SentenceTransformer("all-MiniLM-L6-v2")
+_model = None  # placeholder for lazy loading
 
 def generate_embedding(text):
-    embedding = model.encode(text)
-    return embedding.tolist()
+    global _model
+    if _model is None:
+        _model = SentenceTransformer("all-MiniLM-L6-v2")
+    return _model.encode(text)
