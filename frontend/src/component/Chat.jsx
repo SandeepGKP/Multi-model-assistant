@@ -31,7 +31,7 @@ function Chat({ viewAnswer, setIsLoading }) {
 
         try {
             setIsLoading(true);
-            const response = await axios.post(`${import.meta.env.BACKEND_URL}/api/upload/`, formData, {
+            const response = await axios.post(import.meta.env.BACKEND_URL + "/api/upload/", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
@@ -64,7 +64,7 @@ function Chat({ viewAnswer, setIsLoading }) {
 
         try {
             setIsLoading(true);
-            const res = await axios.post(import.meta.env.BACKEND_URL+"/api/ask/", { question: questionToAsk });
+            const res = await axios.post(import.meta.env.BACKEND_URL + "/api/ask/", { question: questionToAsk });
             console.log("FULL RESPONSE:", res);
             console.log("RESPONSE DATA:", res.data);
             console.log("ANSWER FIELD:", res.data.answer);
