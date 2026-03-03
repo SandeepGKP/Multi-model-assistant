@@ -1,0 +1,31 @@
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;  
+  height: 100%;         /* width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1f1d1e;  /* gray-300 in Tailwind */
+  border-radius: 10x;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3c3d3e; /* gray-500 in Tailwind */
+  border-radius: 10px;
+  border: 2px solid #8c96a3; /* optional padding around thumb */
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #6B7280 #1F2937;
+}
+
+/* global CSS or in your stylesheet */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
