@@ -4,9 +4,9 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-const ViewAnswer = React.memo(({ content = ""}) => {
+const ViewAnswer = React.memo(({content}) => {
   const safeContent = typeof content === "string" ? content : "";
-
+  console.log("content type  : ",typeof content);
   const CodeBlock = ({ inline, className, children, ...props }) => {
     const match = /language-(.+)/.exec(className || "");
     const [copied, setCopied] = useState(false);

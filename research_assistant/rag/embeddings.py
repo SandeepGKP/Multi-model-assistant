@@ -1,12 +1,19 @@
-_model = None
+from google import genai
+import os
+from dotenv import load_dotenv
 
-def get_model():
-    global _model
-    if _model is None:
-        from sentence_transformers import SentenceTransformer
-        _model = SentenceTransformer("paraphrase-MiniLM-L3-v2")
-    return _model
+load_dotenv()
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 def generate_embedding(text):
-    model = get_model()   # 👈 VERY IMPORTANT
-    return model.encode(text)
+    response = client.models.embed_content(
+        model="models/gemini-embedding-001",   
+        contents=text
+    )
+    return response.embeddings[0].values
+
+# Test
+if __name__ == "__main__":
+    emb = generate_embedding("Hello world")
+    print(len(emb))

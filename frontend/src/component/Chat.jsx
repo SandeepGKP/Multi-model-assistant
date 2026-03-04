@@ -22,7 +22,7 @@ function Chat({ viewAnswer, setIsLoading }) {
         const selectedFile = event.target.files[0];
         setFiles(selectedFile);
 
-        const questionToAsk = question.trim(); // ✅ FIXED (was missing)
+        const questionToAsk = question.trim(); // 
 
         const formData = new FormData();
         formData.append("file", selectedFile);
@@ -30,7 +30,7 @@ function Chat({ viewAnswer, setIsLoading }) {
         try {
             setIsLoading(true);
             const response = await axios.post(
-                import.meta.env.VITE_BACKEND_URL + "api/upload/",  // ✅ FIXED
+                import.meta.env.VITE_BACKEND_URL + "/api/upload/",  
                 formData,
                 {
                     headers: {
@@ -39,16 +39,17 @@ function Chat({ viewAnswer, setIsLoading }) {
                 }
             );
 
-            const res = response.data;
+            const res = response;
             setIsLoading(false);
 
-            console.log("Final answer after uploading file : ", res);
 
-            if (res.output && res.output.length > 0) {
-                viewAnswer(res.output[0].text, questionToAsk);
-            } else {
-                viewAnswer("", questionToAsk);
-            }
+            // console.log("Final answer type after uploading file : ",res.success);
+
+            // if (res.output && res.output.length > 0) {
+            //     viewAnswer(res.output[0].text, questionToAsk);
+            // } else {
+            //     viewAnswer("", questionToAsk);
+            // }
 
         } catch (error) {
             console.error("Error uploading file:", error);
@@ -70,11 +71,12 @@ function Chat({ viewAnswer, setIsLoading }) {
         try {
             setIsLoading(true);
             const res = await axios.post(
-                import.meta.env.VITE_BACKEND_URL + "api/ask/",   // ✅ FIXED
+                import.meta.env.VITE_BACKEND_URL + "/api/ask/",   // ✅ FIXED
                 { question: questionToAsk }
             );
-            console.log("Full response : ",res.data.answer)
-            viewAnswer(res.data.answer, questionToAsk);
+            console.log("res of api ask : ", typeof res.data.answer.answer)
+            console.log("res : ", res.data.answer.answer)
+            viewAnswer(res.data.answer.answer, questionToAsk);
             setIsLoading(false);
 
         } catch (error) {

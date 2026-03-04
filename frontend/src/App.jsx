@@ -9,11 +9,29 @@ function App() {
   const [answers, setAnswers] = useState([]); // store all answers
   const [isLoading, setIsLoading] = useState(false);
   const containerRef = useRef(null);
+  const MAX_ARRAY_LENGTH = 4294967295;
 
-  const handleShowAnswer = (answer,questions) => {
-    if (!answer) return;
-    // setQuestion(questions.charAt(0).toUpperCase() + questions.slice(1)); // Capitalize first letter of question
-    setAnswers((prev) => [...prev, "-------------------------\n\n--------------------------------", questions.charAt(0).toUpperCase() + questions.slice(1), answer]);
+  const handleShowAnswer = (answer, questions) => {
+    const formattedAnswer = String(answer);
+    const formattedQuestion = String(questions.charAt(0).toUpperCase() + questions.slice(1));
+    if (!answer) {
+      console.log("no response found", answer);
+      return;
+    }
+
+    console.log("Response : ", typeof answer, "-------------------\n\n");
+    setAnswers((prev) => {
+      if (prev.length >= MAX_ARRAY_LENGTH) {
+        return ["Token exceeded ! Please ask again"];
+      }
+
+      return [
+        ...prev,
+        "-------------------------\n\n--------------------------------",
+        questions.charAt(0).toUpperCase() + questions.slice(1),
+        answer
+      ];
+    });
   };
 
   // Auto-scroll when a new answer is added
@@ -43,7 +61,7 @@ function App() {
             Loading...
           </div>
         )}
-         
+
         {/* Render each answer separately */}
 
         {answers.map((ans, idx) => (

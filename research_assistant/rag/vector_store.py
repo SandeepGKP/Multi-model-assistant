@@ -4,16 +4,18 @@ import numpy as np
 from .embeddings import generate_embedding
 
 # FAISS setup
-dimension = 384  # all-MiniLM-L6-v2
+dimension = 3072  # models/gemini-embedding-001
 index = faiss.IndexFlatL2(dimension)
 documents = []  # store text chunks
 
 def add_text_to_vector_store(text):
     global index, documents
 
-    # Generate embedding
     embedding = generate_embedding(text)
+    print("Embedding length:", len(embedding))  
+
     vector = np.array([embedding]).astype("float32")
+    print("Vector shape:", vector.shape)  
     index.add(vector)
     documents.append(text)
     print("==========================================")
