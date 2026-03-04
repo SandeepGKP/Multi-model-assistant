@@ -73,7 +73,7 @@ function Chat({ viewAnswer, setIsLoading }) {
                 import.meta.env.VITE_BACKEND_URL + "api/ask/",   // ✅ FIXED
                 { question: questionToAsk }
             );
-
+            console.log("Full response : ",res.data.answer)
             viewAnswer(res.data.answer, questionToAsk);
             setIsLoading(false);
 
