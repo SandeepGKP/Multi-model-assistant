@@ -20,10 +20,10 @@ function Chat({ viewAnswer, setIsLoading }) {
 
     const handleUpload = async (event) => {
         const selectedFile = event.target.files[0];
-        setFiles(selectedFile);
+        setFiles(selectedFile.name);
 
         const questionToAsk = question.trim(); // 
-
+        console.log("file name is : ",selectedFile.name);
         const formData = new FormData();
         formData.append("file", selectedFile);
 
@@ -46,9 +46,9 @@ function Chat({ viewAnswer, setIsLoading }) {
             // console.log("Final answer type after uploading file : ",res.success);
 
             // if (res.output && res.output.length > 0) {
-            //     viewAnswer(res.output[0].text, questionToAsk);
+            //     viewAnswer(res.output[0].text, questionToAsk,selectedFile.name);
             // } else {
-            //     viewAnswer("", questionToAsk);
+            //     viewAnswer("", questionToAsk,selectedFile.name);
             // }
 
         } catch (error) {
@@ -76,7 +76,7 @@ function Chat({ viewAnswer, setIsLoading }) {
             );
             console.log("res of api ask : ", typeof res.data.answer.answer)
             console.log("res : ", res.data.answer.answer)
-            viewAnswer(res.data.answer.answer, questionToAsk);
+            viewAnswer(res.data.answer.answer, questionToAsk,files);
             setIsLoading(false);
 
         } catch (error) {
@@ -87,8 +87,8 @@ function Chat({ viewAnswer, setIsLoading }) {
 
     return (
         <>
-            <div className={`${files?.name ? "flex justify-center items-center text-white text-xl mb-2 border-b-2" : ""}`}>
-                {files?.name || ""}
+            <div className={`${files ? "flex justify-center items-center text-white text-xl mb-2 border-b-2" : ""}`}>
+                {files || ""}
             </div>
 
             <div className="flex flex-col w-full">

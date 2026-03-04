@@ -11,7 +11,7 @@ function App() {
   const containerRef = useRef(null);
   const MAX_ARRAY_LENGTH = 4294967295;
 
-  const handleShowAnswer = (answer, questions) => {
+  const handleShowAnswer = (answer, questions, file) => {
     const formattedAnswer = String(answer);
     const formattedQuestion = String(questions.charAt(0).toUpperCase() + questions.slice(1));
     if (!answer) {
@@ -28,6 +28,7 @@ function App() {
       return [
         ...prev,
         "-------------------------\n\n--------------------------------",
+        file +"\n\n",
         questions.charAt(0).toUpperCase() + questions.slice(1),
         answer
       ];
