@@ -17,8 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def health(request):
+    return JsonResponse({"status": "backend working"})
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("rag.urls")),
-    path("api/", include("documents.urls"))
+    path("api/", include("documents.urls")),
+    path("api/",include("rag.urls"))
 ]
