@@ -30,7 +30,7 @@ class UploadDocumentView(APIView):
 
             # Optional: delete file after embedding
             # os.remove(file_path)
-
+            doc.file.delete(save=False)
             return Response({"status": "success", "document_id": doc.id, "result": result}, status=200)
 
         except Exception as e:

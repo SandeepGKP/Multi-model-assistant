@@ -64,11 +64,11 @@ def ingest_document(file_path):
 
     for chunk in chunks:
         add_text_to_vector_store(chunk)
-  # Robust deletion
-    try:
-        os.remove(file_path)
-    except Exception as e:
-        print(f"Warning: could not delete file {file_path}: {e}")
+#   # Robust deletion
+#     try:
+#         os.remove(file_path)
+#     except Exception as e:
+#         print(f"Warning: could not delete file {file_path}: {e}")
 
     try:
         pytesseract.get_tesseract_version()

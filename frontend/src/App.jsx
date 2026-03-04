@@ -22,7 +22,7 @@ function App() {
     console.log("Response : ", typeof answer, "-------------------\n\n");
     setAnswers((prev) => {
       if (prev.length >= MAX_ARRAY_LENGTH) {
-        return ["Token exceeded ! Please ask again"];
+        return ["Token exceeded ! Please try again "];
       }
 
       return [
