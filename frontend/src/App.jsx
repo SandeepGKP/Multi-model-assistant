@@ -53,7 +53,7 @@ function App() {
       {/* Answer Display Area */}
       <div
         ref={containerRef}
-        className={`${answers.length > 0 ? "justify-center h-fit w-[90%] mb-[15vh]  p-20 mx-auto mt-[5vh] text-lg text-gray-300  bg-gray-800 rounded-lg overflow-y-auto custom-scrollbar scroll-smooth" : ""}`}
+        className={`${answers.length > 0 ? "justify-center h-fit w-full lg:w-[90%] sm:w-[95%] mb-[15vh]  p-16  mx-auto mt-[5vh] text-lg text-gray-300  bg-gray-800 rounded-lg overflow-y-auto custom-scrollbar scroll-smooth" : ""}`}
       >
 
         {isLoading && (

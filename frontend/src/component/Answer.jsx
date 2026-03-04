@@ -57,7 +57,7 @@ const ViewAnswer = React.memo(({content}) => {
   return (
     <>
 
-    <div className="max-w-none text-gray-200 text-lg leading-relaxed">
+    <div className="w-full text-gray-200 text-lg leading-relaxed">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
