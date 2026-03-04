@@ -9,8 +9,8 @@ load_dotenv()  # <-- this reads your .env file
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "replace-me-in-prod")
-# DEBUG = os.getenv("DEBUG", "False").lower() == "true"
-DEBUG=True
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+# DEBUG=True
 
 ALLOWED_HOSTS = [
     "multi-model-assistant.onrender.com",
