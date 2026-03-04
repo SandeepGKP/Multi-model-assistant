@@ -69,4 +69,9 @@ def ingest_document(file_path):
         os.remove(file_path)
     except Exception as e:
         print(f"Warning: could not delete file {file_path}: {e}")
+
+    try:
+        pytesseract.get_tesseract_version()
+    except Exception as e:
+        print("Tesseract not installed:", e)
     return {"status": "success", "total_chunks": len(chunks)}

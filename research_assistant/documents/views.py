@@ -7,28 +7,36 @@ from .models import Document
 from rag.document_utils import ingest_document
 from rag.pipeline import run_rag_pipeline
 
+import traceback
+
 class UploadDocumentView(APIView):
-    permission_classes = []  # no login required
+    permission_classes = []
 
     def post(self, request):
-        file = request.FILES.get("file")
-        if not file:
-            return Response({"error": "No file uploaded."}, status=400)
+        try:
+            file = request.FILES.get("file")
+            if not file:
+                return Response({"error": "No file uploaded."}, status=400)
 
-        doc = Document.objects.create(
-            user=request.user if request.user.is_authenticated else None,
-            file=file,
-            title=file.name
-        )
+            doc = Document.objects.create(
+                user=request.user if request.user.is_authenticated else None,
+                file=file,
+                title=file.name
+            )
 
-        # Save chunks into FAISS
-        file_path = doc.file.path
-        ingest_document(file_path)
-        # if os.path.exists(file_path):
-        #    os.remove(file_path)  # Clean up uploaded file after processing
-        doc.file.delete(save=False)
+            # Save chunks into FAISS
+            file_path = doc.file.path
+            result = ingest_document(file_path)
 
-        return Response({"status": "success", "document_id": doc.id}, status=200)
+            # Optional: delete file after embedding
+            # os.remove(file_path)
+
+            return Response({"status": "success", "document_id": doc.id, "result": result}, status=200)
+
+        except Exception as e:
+            traceback_str = traceback.format_exc()
+            print(traceback_str)  # This will show the real error in Render logs
+            return Response({"error": str(e), "trace": traceback_str}, status=500)
 
 class AskQuestionView(APIView):
     permission_classes = []
