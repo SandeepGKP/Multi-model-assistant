@@ -8,6 +8,12 @@ load_dotenv()  # <-- this reads your .env file
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+MEDIA_ROOT = BASE_DIR / "uploads"
+
+# Production (Render)
+if os.environ.get("RENDER"):
+    MEDIA_ROOT = "/tmp/uploads"
+
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "replace-me-in-prod")
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 # DEBUG=True

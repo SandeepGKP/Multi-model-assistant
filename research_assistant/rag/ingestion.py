@@ -15,13 +15,13 @@ def extract_text_from_pdf(file_path):
         if page_text:
             text += f"\n[Page {page_number+1}]\n"
             text += page_text
-    doc.close()
+    # doc.close()
     return text
 
 def extract_text_from_image(file_path):
     image = Image.open(file_path)
     text = pytesseract.image_to_string(image)
-    image.close()
+    # image.close()
     return text
 
 def extract_text_from_txt(file_path):
@@ -65,5 +65,8 @@ def ingest_document(file_path):
     for chunk in chunks:
         add_text_to_vector_store(chunk)
   # Robust deletion
-    
+    try:
+        os.remove(file_path)
+    except Exception as e:
+        print(f"Warning: could not delete file {file_path}: {e}")
     return {"status": "success", "total_chunks": len(chunks)}
