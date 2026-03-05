@@ -4,7 +4,7 @@ import Chat from "./component/Chat";
 import Answer from "./component/Answer";
 // import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 // import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-
+import loader from "./assets/loading.gif"
 function App() {
   const [answers, setAnswers] = useState([]); // store all answers
   const [isLoading, setIsLoading] = useState(false);
@@ -54,8 +54,8 @@ function App() {
       >
 
         {isLoading && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl text-white">
-            Loading...
+          <div className="fixed z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl text-white">
+            <img className="w-24 h-24 rounded-full bg-gray-800" src={loader} alt="Loading..."/>
           </div>
         )}
 
