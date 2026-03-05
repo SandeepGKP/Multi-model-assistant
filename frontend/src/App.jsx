@@ -53,7 +53,7 @@ function App() {
       {/* Answer Display Area */}
       <div
         ref={containerRef}
-        className={`${answers.length > 0 ? "justify-center h-fit w-full lg:w-[90%] sm:w-[95%] mb-[15vh]  p-16  mx-auto mt-[5vh] text-lg text-gray-300  bg-gray-800 rounded-lg overflow-y-auto custom-scrollbar scroll-smooth" : ""}`}
+        className={`${answers.length > 0 ? "justify-center h-fit md:w-[95%] lg:w-[80%] sm:w-[100%] mb-[15vh]  p-16  mx-auto mt-[5vh] text-lg text-gray-300  bg-gray-800 rounded-lg overflow-y-auto custom-scrollbar scroll-smooth" : ""}`}
       >
 
         {isLoading && (
@@ -71,10 +71,10 @@ function App() {
       </div>
 
       {/* Chat Input Area */}
-      <div className="flex bottom-2 w-[70%] p-2 gap-5 justify-center items-center mx-auto mt-5 bg-gray-800 rounded-lg">
-        <div className="fixed w-[70%] bottom-2 left-1/2 transform -translate-x-1/2 bg-gray-700 rounded-lg p-2">
+      <div className="flex bottom-2 w-[90%] md:w-[95%] lg:w-[60%] sm:w-[100%] p-2 gap-5 justify-center items-center mx-auto mt-5 bg-gray-800 rounded-lg">
+        <div className="fixed w-full md:w-[70%] lg:w-[60%] sm:w-[100%] bottom-2 left-1/2 transform -translate-x-1/2 bg-gray-700 rounded-lg p-2">
           <Chat viewAnswer={handleShowAnswer} setIsLoading={setIsLoading} />
-        </div>
+        </div> 
       </div>
     </>
   );
