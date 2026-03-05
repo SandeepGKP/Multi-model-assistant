@@ -55,7 +55,7 @@ function App() {
 
         {isLoading && (
           <div className="fixed z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xl text-white">
-            <img className="w-24 h-24 rounded-full bg-gray-800" src={loader} alt="Loading..."/>
+            <img className="w-20 h-20 rounded-full bg-gray-800" src={loader} alt="Loading..."/>
           </div>
         )}
 
