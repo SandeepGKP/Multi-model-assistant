@@ -51,7 +51,7 @@ function App() {
       {/* Answer Display Area */}
       <div
         ref={containerRef}
-        className={`${answers.length > 0 ? "justify-center h-fit w-full md:w-[95%] lg:w-[80%]  mb-[15vh]  p-8  mx-auto mt-[5vh] text-lg text-gray-300  bg-gray-800 rounded-lg overflow-y-auto custom-scrollbar scroll-smooth" : ""}`}
+        className={`${answers.length > 0 ? "justify-center h-fit w-full md:w-[95%] lg:w-[80%]  mb-[40%]  p-8  mx-auto mt-[5vh] text-lg text-gray-300  bg-gray-800 rounded-lg overflow-y-auto custom-scrollbar scroll-smooth" : ""}`}
       >
 
         {isLoading && (
