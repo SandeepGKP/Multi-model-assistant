@@ -45,9 +45,7 @@ function App() {
     <>
       {/* Header */}
       <div className="fixed w-full h-auto z-10 top-0 text-center text-2xl font-semibold border-b border-gray-700 bg-gray-800 text-gray-300">
-        <p className="text-lg font-semibold p-4">ForgeX</p>
-        {/* <br/> */}
-        <p className="text-lg font-thin mb-4">A smart AI research partner that turns complex information into clear, actionable knowledge.</p>
+        <p className="text-lg font-semibold p-2 ">ForgeX <br/><span className="font-thin">A smart AI research partner</span></p>
       </div>
 
       {/* Answer Display Area */}
