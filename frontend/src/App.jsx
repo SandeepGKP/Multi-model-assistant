@@ -17,7 +17,6 @@ function App() {
       console.log("no response found", answer);
       return;
     }
-
     console.log("Response : ", typeof answer, "-------------------\n\n");
     setAnswers((prev) => {
       if (prev.length >= MAX_ARRAY_LENGTH) {
