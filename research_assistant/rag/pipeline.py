@@ -145,7 +145,7 @@ def run_rag_pipeline(query):
 
     query_chunk.append(answer_with_query_only)
 
-    if len(query_chunk)>5:
+    if len(query_chunk)>2:
         query_chunk.pop(0)
 
     if answer_with_query_only and not context_chunks:
