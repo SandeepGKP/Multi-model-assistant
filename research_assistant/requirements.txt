@@ -41,7 +41,10 @@ pillow>=10.0.0
 requests>=2.31.0
 httpx>=0.27.0
 
-pytesseract
+torch==2.2.2
+easyocr==1.7.1
+
+# pytesseract
 # =========================
 # Optional (ONLY if using Celery)
 # =========================

@@ -2,7 +2,7 @@
 import os
 import fitz  # PyMuPDF
 from PIL import Image
-import pytesseract
+import easyocr
 from .embeddings import generate_embedding
 from .vector_store import add_text_to_vector_store
 
@@ -18,8 +18,10 @@ def extract_text_from_pdf(file_path):
     return text
 
 def extract_text_from_image(file_path):
-    image = Image.open(file_path)
-    return pytesseract.image_to_string(image)
+    reader = easyocr.Reader(['en'])  # load English model
+    results = reader.readtext(file_path)
+    # results is a list of [bbox, text, confidence]
+    return " ".join([text for (_, text, _) in results])
 
 def extract_text_from_txt(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
