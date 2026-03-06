@@ -7,7 +7,6 @@ function Chat({ viewAnswer, setIsLoading }) {
     const [question, setQuestion] = useState("");
     const [files, setFiles] = useState(null);
     const fileRef = useRef(null);
- 
 
     const handleClick = () => {
         fileRef.current.click();
@@ -21,7 +20,26 @@ function Chat({ viewAnswer, setIsLoading }) {
     const handleUpload = async (event) => {
         const selectedFile = event.target.files[0];
         setFiles(selectedFile.name);
+        if (!selectedFile) {
+            return;
+        }
+        const allowedTypes = [
+            "application/pdf",
+            "image/jpeg",
+            "image/jpg",   // sometimes browsers use jpeg only
+            "image/png",
+            "text/plain"
+        ];
 
+        // Allowed extensions (fallback check)
+        const allowedExtensions = ["pdf", "jpeg", "jpg", "png", "txt"];
+        const fileExtension = selectedFile.name.split(".").pop().toLowerCase();
+
+        if (!allowedTypes.includes(selectedFile.type) || !allowedExtensions.includes(fileExtension)) {
+            setFiles(null);
+            alert("Invalid file type. Only PDF, JPG, PNG, and TXT allowed.")
+            return;
+        }
         const questionToAsk = question.trim(); // 
         console.log("file name is : ", selectedFile.name);
         const formData = new FormData();
@@ -69,7 +87,7 @@ function Chat({ viewAnswer, setIsLoading }) {
         try {
             setIsLoading(true);
             const res = await axios.post(
-                import.meta.env.VITE_BACKEND_URL + "api/ask/",  
+                import.meta.env.VITE_BACKEND_URL + "api/ask/",
                 { question: questionToAsk }
             );
             console.log("------------------------------------------------------------------");
@@ -105,6 +123,7 @@ function Chat({ viewAnswer, setIsLoading }) {
                     }}
                     onChange={inputquestion}
                     rows={3}
+                    placeholder='Ask me something....'
                 />
 
                 <div className="flex items-center mt-2 justify-between w-full">
