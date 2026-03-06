@@ -94,12 +94,12 @@ Answer:
     fixed_answer = fix_code_blocks(full_answer)
     return fixed_answer
 
-def generate_answer_withQuery_Only(query):
+def generate_answer_withQuery_Only(query,query_chunk):
     prompt = f"""
 Answer the question related to that topic and return adjusted and complete answer until unless content related to topic is complete.
 
 Context:
-{query}
+{query_chunk}
 Question:
 {query}
 
@@ -130,15 +130,23 @@ Answer:
     fixed_answer = fix_code_blocks(full_answer)
     return fixed_answer
 
+# query chunks
+queries=[]
+def questions(query):
+    if len(queries)>=1000:
+        queries=[]
+    queries.append(query)
+    return queries
 
 # 3️⃣ Full RAG pipeline
 def run_rag_pipeline(query):
     context_chunks = retrieve_context(query)
     # if not context_chunks:
     #     return {"answer": "No relevant information found."}
-
+    
     answer = generate_answer(query, context_chunks)
-    answer_with_query_only = generate_answer_withQuery_Only(query)  
+    query_chunk=questions(query)
+    answer_with_query_only = generate_answer_withQuery_Only(query,query_chunk)  
 
     if answer_with_query_only and not context_chunks:
         answer = answer_with_query_only

@@ -47,7 +47,7 @@ const ViewAnswer = React.memo(({ content }) => {
     }
 
     return (
-      <code className="bg-gray-800 text-green-300 px-1 py-0.5 rounded text-xl">
+      <code className="bg-gray-800 text-blue-500 px-1 py-0.5 rounded text-xl">
         {children}
       </code>
     );
@@ -63,19 +63,19 @@ const ViewAnswer = React.memo(({ content }) => {
             code: CodeBlock,
 
             h1: ({ children }) => (
-              <h1 className="text-lg border-b border-gray-700 pb-2 my-4">
+              <h1 className="text-lg italic border-b border-gray-700 pb-2 my-4">
                 {children}
               </h1>
             ),
 
             h2: ({ children }) => (
-              <h2 className="text-lg  border-b border-gray-700 pb-1 my-3">
+              <h2 className="text-lg italic border-b border-gray-700 pb-1 my-3">
                 {children}
               </h2>
             ),
 
             h3: ({ children }) => (
-              <h3 className="text-lg my-2">
+              <h3 className="text-lg italic my-2">
                 {children}
               </h3>
             ),
