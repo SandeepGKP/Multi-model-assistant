@@ -97,6 +97,9 @@ Answer:
 def generate_answer_withQuery_Only(query):
     prompt = f"""
 Answer the question related to that topic and return adjusted and complete answer until unless content related to topic is complete.
+
+Context:
+{query}
 Question:
 {query}
 
