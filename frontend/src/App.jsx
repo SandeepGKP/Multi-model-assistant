@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 // import ReactMarkdown from "react-markdown";
 import Chat from "./component/ChatComponent";
 import Answer from "./component/Answer";
@@ -9,7 +9,7 @@ function App() {
   const [answers, setAnswers] = useState([]); // store all answers
   const [isLoading, setIsLoading] = useState(false);
   const containerRef = useRef(null);
-  const MAX_ARRAY_LENGTH = 4294967295;
+  const MAX_ARRAY_LENGTH = 42949;
 
   const handleShowAnswer = (answer, questions, file) => {
     file = file !== null ? file : "";
@@ -61,9 +61,9 @@ function App() {
 
         {/* Render each answer separately */}
 
-        {answers.map((ans, idx) => (
+        {useMemo(()=>answers.map((ans, idx) => (
           <Answer key={idx} content={ans} />
-        ))}
+        )))}
 
       </div>
 

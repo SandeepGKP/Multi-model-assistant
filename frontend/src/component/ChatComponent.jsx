@@ -28,7 +28,7 @@ function Chat({ viewAnswer, setIsLoading }) {
         formData.append("file", selectedFile);
 
         try {
-            setIsLoading(true);
+            // setIsLoading(true);
             const response = await axios.post(
                 import.meta.env.VITE_BACKEND_URL + "api/upload/",
                 formData,
@@ -74,9 +74,9 @@ function Chat({ viewAnswer, setIsLoading }) {
             );
             console.log("------------------------------------------------------------------");
             console.log("------------------------------------------------------------------");
-            console.log("------------------------------------------------------------------");
-            console.log("res of api ask : ", typeof res.data.answer.answer)
-            console.log("res : ", res.data.answer.answer)
+            // console.log("------------------------------------------------------------------");
+            // console.log("res of api ask : ", typeof res.data.answer.answer)
+            console.log("res : ", res.data.answer.answer.length)
             viewAnswer(res.data.answer.answer, questionToAsk, files);
             setIsLoading(false);
 
