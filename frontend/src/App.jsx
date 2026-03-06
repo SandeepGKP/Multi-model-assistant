@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 // import ReactMarkdown from "react-markdown";
-import Chat from "./component/Chat";
+import Chat from "./component/ChatComponent";
 import Answer from "./component/Answer";
 // import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 // import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";

@@ -7,11 +7,11 @@ function Chat({ viewAnswer, setIsLoading }) {
     const [question, setQuestion] = useState("");
     const [files, setFiles] = useState(null);
     const fileRef = useRef(null);
+ 
 
     const handleClick = () => {
         fileRef.current.click();
     }
-
     useEffect(() => {
         if (files) {
             console.log("Uploading file.....");
@@ -23,14 +23,14 @@ function Chat({ viewAnswer, setIsLoading }) {
         setFiles(selectedFile.name);
 
         const questionToAsk = question.trim(); // 
-        console.log("file name is : ",selectedFile.name);
+        console.log("file name is : ", selectedFile.name);
         const formData = new FormData();
         formData.append("file", selectedFile);
 
         try {
             setIsLoading(true);
             const response = await axios.post(
-                import.meta.env.VITE_BACKEND_URL + "api/upload/",  
+                import.meta.env.VITE_BACKEND_URL + "api/upload/",
                 formData,
                 {
                     headers: {
@@ -56,7 +56,6 @@ function Chat({ viewAnswer, setIsLoading }) {
             setIsLoading(false);
         }
     }
-
     const inputquestion = (e) => {
         setQuestion(e.target.value);
     }
@@ -67,16 +66,18 @@ function Chat({ viewAnswer, setIsLoading }) {
 
         setQuestion("");
         setFiles(null);
-
         try {
             setIsLoading(true);
             const res = await axios.post(
-                import.meta.env.VITE_BACKEND_URL + "api/ask/",   // ✅ FIXED
+                import.meta.env.VITE_BACKEND_URL + "api/ask/",  
                 { question: questionToAsk }
             );
+            console.log("------------------------------------------------------------------");
+            console.log("------------------------------------------------------------------");
+            console.log("------------------------------------------------------------------");
             console.log("res of api ask : ", typeof res.data.answer.answer)
             console.log("res : ", res.data.answer.answer)
-            viewAnswer(res.data.answer.answer, questionToAsk,files);
+            viewAnswer(res.data.answer.answer, questionToAsk, files);
             setIsLoading(false);
 
         } catch (error) {
