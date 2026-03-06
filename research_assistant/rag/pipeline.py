@@ -131,24 +131,22 @@ Answer:
     return fixed_answer
 
 # query chunks
-queries=[]
-def questions(query):
-    global queries
-    if len(queries)>2:
-        queries.pop(0)
-    queries.append(query)
-    return queries
-
+query_chunk=[]
 # 3️⃣ Full RAG pipeline
 def run_rag_pipeline(query):
+    global queries
     context_chunks = retrieve_context(query)
     # if not context_chunks:
     #     return {"answer": "No relevant information found."}
     
     answer = generate_answer(query, context_chunks)
 
-    query_chunk=questions(query)
-    answer_with_query_only = generate_answer_withQuery_Only(query,query_chunk)  
+    answer_with_query_only = generate_answer_withQuery_Only(query,query_chunk) 
+
+    query_chunk.append(answer_with_query_only)
+    
+    if len(query_chunk)>10:
+        query_chunk.pop(0)
 
     if answer_with_query_only and not context_chunks:
         answer = answer_with_query_only
