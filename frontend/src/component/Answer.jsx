@@ -32,18 +32,6 @@ const ViewAnswer = React.memo(({ content }) => {
           {/* Highlight as bash */}
           <SyntaxHighlighter
             style={oneDark}
-            language="bash"
-            PreTag="div"
-            customStyle={{
-              borderRadius: "0.75rem",
-              paddingTop: "2.5rem",
-            }}
-            {...props}
-          >
-            {codeString}
-          </SyntaxHighlighter>
-          <SyntaxHighlighter
-            style={oneDark}
             language={match ? match[1] : "bash"}
             PreTag="div"
             customStyle={{
