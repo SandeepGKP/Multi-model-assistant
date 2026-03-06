@@ -133,7 +133,8 @@ Answer:
 # query chunks
 queries=[]
 def questions(query):
-    if len(queries)>=1000:
+    global queries
+    if len(queries)>=100:
         queries=[]
     queries.append(query)
     return queries
@@ -145,6 +146,7 @@ def run_rag_pipeline(query):
     #     return {"answer": "No relevant information found."}
     
     answer = generate_answer(query, context_chunks)
+
     query_chunk=questions(query)
     answer_with_query_only = generate_answer_withQuery_Only(query,query_chunk)  
 
