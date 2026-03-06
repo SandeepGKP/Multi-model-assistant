@@ -5,3 +5,6 @@ services:
     buildCommand: "pip install -r requirements.txt"
     startCommand: "gunicorn research_assistant.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120"
     deployHook: "python manage.py migrate --noinput"
+    aptPackages:
+      - tesseract-ocr
+      - poppler-utils
