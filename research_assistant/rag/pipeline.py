@@ -134,7 +134,7 @@ Answer:
 queries=[]
 def questions(query):
     global queries
-    if len(queries)>=20:
+    if len(queries)>2:
         queries.pop(0)
     queries.append(query)
     return queries
