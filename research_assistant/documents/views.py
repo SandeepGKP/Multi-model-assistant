@@ -9,6 +9,14 @@ from rag.pipeline import run_rag_pipeline
 
 import traceback
 
+import shutil
+from django.http import HttpResponse
+
+def test_tesseract_view(request):
+    path = shutil.which("tesseract")
+    return HttpResponse(f"Tesseract path: {path}")
+
+
 class UploadDocumentView(APIView):
     permission_classes = []
 
