@@ -3,5 +3,7 @@ services:
     name: research-assistant
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn research_assistant.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120"
+    startCommand: "gunicorn research_assistant.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120 --keep-alive 5"
     deployHook: "python manage.py migrate --noinput"
+    aptPackages:
+      - tesseract-ocr
