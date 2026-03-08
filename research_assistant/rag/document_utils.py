@@ -1,8 +1,7 @@
 # rag/document_utils.py
 import os
 import fitz  # PyMuPDF
-from PIL import Image,ImageEnhance
-import pytesseract
+import requests
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -23,32 +22,31 @@ def extract_text_from_pdf(file_path):
             text += page_text
     return text
 
-#extract text from image
-
+# extract text from image
 def extract_text_from_image(file_path):
     try:
-        if shutil.which("tesseract") is None:
-            raise RuntimeError("Tesseract is not installed on this server")
-        print("Tesseract path:", shutil.which("tesseract"))
-        img = Image.open(file_path)
+        url = "https://ocr-microservice-02ej.onrender.com/api/ocr"
 
-        # Convert to grayscale
-        img = img.convert("L")
+        # Detect file name and type
+        filename = os.path.basename(file_path)
 
-        # Increase contrast
-        enhancer = ImageEnhance.Contrast(img)
-        img = enhancer.enhance(2)
+        files = {
+            "file": (filename, open(file_path, "rb"))
+        }
 
-        # Sharpen image
-        sharp = ImageEnhance.Sharpness(img)
-        img = sharp.enhance(2)
+        response = requests.post(url, files=files, timeout=60)
 
-        text = pytesseract.image_to_string(img)
+        if response.status_code == 200:
+            data = response.json()
+            return data.get("res", "")
 
-        return text
-    except Exception:
         return ""
-   
+
+    except Exception as e:
+        print("OCR error:", e)
+        return ""
+
+  
 #   extract text from .txt file  
 def extract_text_from_txt(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
