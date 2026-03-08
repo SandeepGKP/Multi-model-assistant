@@ -29,7 +29,7 @@ def extract_text_from_image(file_path):
     try:
         if shutil.which("tesseract") is None:
             raise RuntimeError("Tesseract is not installed on this server")
-
+        print("Tesseract path:", shutil.which("tesseract"))
         img = Image.open(file_path)
 
         # Convert to grayscale

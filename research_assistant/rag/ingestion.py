@@ -7,11 +7,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 import shutil
-# ✅ Check if Tesseract is installed
-if shutil.which("tesseract") is None:
-    raise RuntimeError("Tesseract is not installed on this server")
-
-
 # ==============================
 # Extract text functions
 # ==============================
@@ -29,6 +24,9 @@ def extract_text_from_pdf(file_path):
 #extract image from image
 def extract_text_from_image(file_path):
     try:
+        if shutil.which("tesseract") is None:
+            raise RuntimeError("Tesseract is not installed on this server")
+        print("Tesseract path:", shutil.which("tesseract"))
         img = Image.open(file_path)
 
         # Convert to grayscale
@@ -47,7 +45,7 @@ def extract_text_from_image(file_path):
         return text
     except Exception:
         return ""
-
+ 
 def extract_text_from_txt(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
