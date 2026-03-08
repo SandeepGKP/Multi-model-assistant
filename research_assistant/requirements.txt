@@ -43,7 +43,8 @@ httpx>=0.27.0
 
 
 
-# pytesseract
+pytesseract
+Pillow
 # =========================
 # Optional (ONLY if using Celery)
 # =========================

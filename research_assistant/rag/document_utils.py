@@ -2,12 +2,9 @@
 import os
 import fitz  # PyMuPDF
 from PIL import Image
-
+import pytesseract
 from dotenv import load_dotenv
 load_dotenv()
-
-import base64
-import requests
 
 from .embeddings import generate_embedding
 from .vector_store import add_text_to_vector_store
@@ -24,31 +21,16 @@ def extract_text_from_pdf(file_path):
     return text
 
 #extract text from image
+
 def extract_text_from_image(file_path):
-    api_key = os.getenv("VISION_API_KEY")
-    url = f"https://vision.googleapis.com/v1/images:annotate?key={api_key}"
-
-    with open(file_path, "rb") as f:
-        img_content = base64.b64encode(f.read()).decode("utf-8")
-
-    payload = {
-        "requests": [
-            {
-                "image": {"content": img_content},
-                "features": [{"type": "TEXT_DETECTION"}]
-            }
-        ]
-    }
-
-    response = requests.post(url, json=payload)
-    result = response.json()
-
     try:
-        return result["responses"][0]["textAnnotations"][0]["description"]
-    except (KeyError, IndexError):
+        img = Image.open(file_path)
+        text = pytesseract.image_to_string(img)
+        return text
+    except Exception:
         return ""
     
-
+#   extract text from .txt file  
 def extract_text_from_txt(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
@@ -72,7 +54,7 @@ def ingest_document(file_path):
     ext = file_path.split(".")[-1].lower()
     if ext == "pdf":
         text = extract_text_from_pdf(file_path)
-    elif ext in ["png", "jpg", "jpeg"]:
+    elif ext in ["png", "jpg", "jpeg", "webp", "bmp", "tiff", "tif", "gif", "ico", "heic"]:
         text = extract_text_from_image(file_path)
     elif ext == "txt":
         text = extract_text_from_txt(file_path)
