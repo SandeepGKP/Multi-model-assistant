@@ -5,7 +5,7 @@ import '../custom.css';
 function Chat({ viewAnswer, setIsLoading }) {
 
     const [question, setQuestion] = useState("");
-    const [files, setFiles] = useState(null);
+    const [files, setFiles] = useState([]);
     const fileRef = useRef(null);
 
     const handleClick = () => {
@@ -19,7 +19,11 @@ function Chat({ viewAnswer, setIsLoading }) {
 
     const handleUpload = async (event) => {
         const selectedFile = event.target.files[0];
-        setFiles(selectedFile.name);
+        if (files.length >= 1) {
+            alert("Only one file can be uploaded at a time.");
+            return;
+        }
+        setFiles((prev) => [...prev, selectedFile.name]);
         if (!selectedFile) {
             return;
         }
@@ -36,7 +40,7 @@ function Chat({ viewAnswer, setIsLoading }) {
         const fileExtension = selectedFile.name.split(".").pop().toLowerCase();
 
         if (!allowedTypes.includes(selectedFile.type) || !allowedExtensions.includes(fileExtension)) {
-            setFiles(null);
+            setFiles([]);
             alert("Invalid file type. Only PDF, JPG, PNG, and TXT allowed.")
             return;
         }
@@ -83,7 +87,7 @@ function Chat({ viewAnswer, setIsLoading }) {
         if (questionToAsk === "") return;
 
         setQuestion("");
-        setFiles(null);
+        setFiles([]);
         try {
             setIsLoading(true);
             const res = await axios.post(
@@ -106,8 +110,10 @@ function Chat({ viewAnswer, setIsLoading }) {
 
     return (
         <>
-            <div className={`${files ? "flex justify-center items-center text-white text-xl mb-2 border-b-2" : ""}`}>
-                {files || ""}
+            <div className={`${files[0] ? "flex justify-center items-center text-white text-xl mb-2 border-b-2" : ""}`}>
+                {files.map((file, key) => (
+                    <p key={key}>{file}</p>
+                ))}
             </div>
 
             <div className="flex flex-col w-full">
