@@ -29,25 +29,32 @@ def extract_text_from_image(file_path):
     try:
         url = "https://ocr-microservice-02ej.onrender.com/api/ocr"
 
-        # Detect file name and type
         filename = os.path.basename(file_path)
+        print("File path:", file_path)
 
-        files = {
-            "file": (filename, open(file_path, "rb"))
-        }
+        with open(file_path, "rb") as f:
+            files = {
+                "file": (filename, f)
+            }
 
-        response = requests.post(url, files=files, timeout=60)
-
-        if response.status_code == 200:
+            response = requests.get(url, files=files, timeout=60)
             data = response.json()
-            return data.get("text", "")
+            print("Status code:", response.status_code)
+            print("Raw response:", data.get("res", ""))
 
-        return ""
+            if response.status_code == 200:
+                data = response.json()
+                print("OCR response:", data.get("res", ""))
+                return data.get("res", "")
+
+            return ""
 
     except Exception as e:
         print("OCR error:", e)
         return ""
     
+
+
 # extract text from .txt file
 def extract_text_from_txt(file_path):
     with open(file_path, "r", encoding="utf-8") as f:

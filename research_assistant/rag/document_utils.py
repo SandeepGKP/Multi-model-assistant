@@ -1,14 +1,13 @@
 # rag/document_utils.py
-import os
+import os,re
 import fitz  # PyMuPDF
 import requests
 from dotenv import load_dotenv
 load_dotenv()
-
 from .embeddings import generate_embedding
 from .vector_store import add_text_to_vector_store
 
-import shutil
+import mimetypes
 
 
 #  Extract text
@@ -27,44 +26,59 @@ def extract_text_from_image(file_path):
     try:
         url = "https://ocr-microservice-02ej.onrender.com/api/ocr"
 
-        # Detect file name and type
         filename = os.path.basename(file_path)
 
-        files = {
-            "file": (filename, open(file_path, "rb"))
-        }
+        mime_type, _ = mimetypes.guess_type(file_path)
 
-        response = requests.post(url, files=files, timeout=60)
+        with open(file_path, "rb") as f:
+            files = {
+                "file": (filename, f, mime_type)
+            }
 
-        if response.status_code == 200:
-            data = response.json()
-            return data.get("res", "")
+            response = requests.get(url, files=files, timeout=120)
 
-        return ""
+            print("Status:", response.status_code)
+            print("Response:", response.text)
+
+            if response.status_code == 200:
+                data = response.json()
+                return data.get("res", "")
+
+            return ""
 
     except Exception as e:
         print("OCR error:", e)
         return ""
+    
 
-  
 #   extract text from .txt file  
 def extract_text_from_txt(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
 
 # 2️⃣ Chunk text
+import re
+
 def chunk_text(text, chunk_size=500, overlap=100):
     chunks = []
     start = 0
+
     while start < len(text):
         end = start + chunk_size
-        chunk = text[start:end]
-        chunks.append(chunk)
+        chunk = text[start:end].strip()
+
+        # remove chunks that are mostly non-text
+        if len(chunk) > 20 and re.search(r'[a-zA-Z]', chunk):
+            chunks.append(chunk)
+
         start += chunk_size - overlap
+
     return chunks
+
 
 # 3️⃣ Ingest document
 def ingest_document(file_path):
+    print("file path ....:: ",file_path)
     if not os.path.exists(file_path):
         return {"error": "File not found"}
 
