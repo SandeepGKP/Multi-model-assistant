@@ -22,9 +22,6 @@ def extract_text_from_pdf(file_path):
     return text
 
 #extract image from image
-import pytesseract
-from PIL import Image
-
 def extract_text_from_image(file_path):
     try:
         img = Image.open(file_path)
