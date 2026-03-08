@@ -10,9 +10,7 @@ from .embeddings import generate_embedding
 from .vector_store import add_text_to_vector_store
 
 import shutil
-# ✅ Check if Tesseract is installed
-if shutil.which("tesseract") is None:
-    raise RuntimeError("Tesseract is not installed on this server")
+
 
 #  Extract text
 def extract_text_from_pdf(file_path):
@@ -29,6 +27,9 @@ def extract_text_from_pdf(file_path):
 
 def extract_text_from_image(file_path):
     try:
+        if shutil.which("tesseract") is None:
+            raise RuntimeError("Tesseract is not installed on this server")
+
         img = Image.open(file_path)
 
         # Convert to grayscale
