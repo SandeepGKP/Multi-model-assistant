@@ -19,6 +19,7 @@ from django.urls import include, path
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from documents.test_tesseract_view import test_tesseract_view
 
 @csrf_exempt
 def health(request):
@@ -28,5 +29,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("rag.urls")),
     path("api/", include("documents.urls")),
-    path("api/",include("rag.urls"))
+    path("api/",include("rag.urls")),
+    path("tesseract_view/",test_tesseract_view)
 ]
