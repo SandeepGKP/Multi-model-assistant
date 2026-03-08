@@ -1,4 +1,4 @@
-import os
+import os,mimetypes
 import fitz  # PyMuPDF
 
 from .vector_store import add_text_to_vector_store
@@ -30,21 +30,21 @@ def extract_text_from_image(file_path):
         url = "https://ocr-microservice-02ej.onrender.com/api/ocr"
 
         filename = os.path.basename(file_path)
-        print("File path:", file_path)
+
+        mime_type, _ = mimetypes.guess_type(file_path)
 
         with open(file_path, "rb") as f:
             files = {
-                "file": (filename, f)
+                "file": (filename, f, mime_type)
             }
 
-            response = requests.get(url, files=files, timeout=60)
-            data = response.json()
-            print("Status code:", response.status_code)
-            print("Raw response:", data.get("res", ""))
+            response = requests.post(url, files=files, timeout=120)
+
+            print("Status:", response.status_code)
+            print("Response:", response.text)
 
             if response.status_code == 200:
                 data = response.json()
-                print("OCR response:", data.get("res", ""))
                 return data.get("res", "")
 
             return ""
