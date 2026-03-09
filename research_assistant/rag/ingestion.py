@@ -25,34 +25,42 @@ def extract_text_from_pdf(file_path):
     return text
 
 # extract text from image
+import os
+import mimetypes
+import requests
+
 def extract_text_from_image(file_path):
     try:
         url = "https://ocr-microservice-02ej.onrender.com/api/ocr"
 
-        filename = os.path.basename(file_path)
+        if not os.path.exists(file_path):
+            print("File not found:", file_path)
+            return ""
 
+        filename = os.path.basename(file_path)
         mime_type, _ = mimetypes.guess_type(file_path)
+        mime_type = mime_type or "image/png"
+
+        print("File:", filename)
+        print("Size:", os.path.getsize(file_path))
 
         with open(file_path, "rb") as f:
-            files = {
-                "file": (filename, f, mime_type)
-            }
+            files = {"file": (filename, f, mime_type)}
 
-            response = requests.post(url, files=files, timeout=120)
+            response = requests.post(url, files=files, timeout=180)
 
-            print("Status:", response.status_code)
-            print("Response:", response.text)
+        print("OCR Status:", response.status_code)
+        print("OCR Response:", response.text)
 
-            if response.status_code == 200:
-                data = response.json()
-                return data.get("res", "")
+        if response.ok:
+            data = response.json()
+            return data.get("res", "")
 
-            return ""
+        return ""
 
     except Exception as e:
         print("OCR error:", e)
         return ""
-    
 
 
 # extract text from .txt file
