@@ -6,7 +6,7 @@ djangorestframework==3.16.1
 django-cors-headers==4.9.0
 gunicorn
 whitenoise
-
+aiohttp
 dj_database_url
 psycopg2-binary
 # =========================

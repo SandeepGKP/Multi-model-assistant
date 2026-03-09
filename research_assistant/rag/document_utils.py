@@ -35,7 +35,7 @@ def extract_text_from_image(file_path):
                 "file": (filename, f, mime_type)
             }
 
-            response = requests.post(url, files=files, timeout=120)
+            response = requests.post(url, files=files, timeout=180)
 
             print("Status:", response.status_code)
             print("Response:", response.text)

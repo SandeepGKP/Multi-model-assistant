@@ -77,7 +77,7 @@ DATABASES = {
         os.environ.get("DATABASE_URL")
     )
 }
-
+DATABASES["default"]["CONN_MAX_AGE"] = 60
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
