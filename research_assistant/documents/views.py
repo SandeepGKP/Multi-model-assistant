@@ -1,6 +1,5 @@
 # documents/views.py
 import os
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Document
@@ -20,7 +19,7 @@ def test_tesseract_view(request):
 class UploadDocumentView(APIView):
     permission_classes = []
 
-    async def post(self, request):
+    def post(self, request):
         try:
             file = request.FILES.get("file")
             if not file:
@@ -34,7 +33,7 @@ class UploadDocumentView(APIView):
 
             # Save chunks into FAISS
             file_path = doc.file.path
-            result = await ingest_document(file_path)
+            result = ingest_document(file_path)
 
             # Optional: delete file after embedding
             # os.remove(file_path)

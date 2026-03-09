@@ -118,7 +118,7 @@ function Chat({ viewAnswer, setIsLoading }) {
                         <span>{file}</span>
                         <span
                             onClick={() => handleRemove(key)}
-                            className="cursor-pointer text-red-400"
+                            className="cursor-pointer text-red-400 text-lg rounded-full bg-gray-300 w-6 h-6 justify-center text-center"
                         >
                             X
                         </span>
