@@ -81,7 +81,9 @@ function Chat({ viewAnswer, setIsLoading }) {
     const inputquestion = (e) => {
         setQuestion(e.target.value);
     }
-
+    const handleRemove = (i) => {
+        setFiles((prevFiles) => prevFiles.filter((file, idx) => idx !== i));
+    };
     const askQuestion = async () => {
         const questionToAsk = question.trim();
         if (questionToAsk === "") return;
@@ -112,10 +114,17 @@ function Chat({ viewAnswer, setIsLoading }) {
         <>
             <div className={`${files[0] ? "flex justify-center items-center text-white text-xl mb-2 border-b-2" : ""}`}>
                 {files.map((file, key) => (
-                    <p key={key}>{file}</p>
+                    <div key={key} className="p-2 flex items-center gap-2">
+                        <span>{file}</span>
+                        <span
+                            onClick={() => handleRemove(key)}
+                            className="cursor-pointer text-red-400"
+                        >
+                            X
+                        </span>
+                    </div>
                 ))}
             </div>
-
             <div className="flex flex-col w-full">
 
                 <textarea
