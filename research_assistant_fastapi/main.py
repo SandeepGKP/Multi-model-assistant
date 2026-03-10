@@ -3,6 +3,7 @@ from rag.routes import router as rag_router
 from documents.routes import router as documents_router
 from documents.db import Base,engine
 from fastapi.middleware.cors import CORSMiddleware 
+import uvicorn,os
 # Create FastAPI app
 app = FastAPI(
     title="Multi‑Modal Research Assistant",
@@ -27,3 +28,8 @@ app.include_router(rag_router, prefix="/api/rag", tags=["rag"])
 @app.get("/health")
 async def health_check():
     return {"status": "ok", "message": "FastAPI backend working"}
+
+if __name__ == "__main__":
+    # Render injects PORT into the environment
+    port = int(os.environ.get("PORT", 5000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
