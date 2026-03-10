@@ -1,18 +1,16 @@
-import os,mimetypes
-import fitz  # PyMuPDF
-
-from .vector_store import add_text_to_vector_store
-from dotenv import load_dotenv
-import requests
-
-import requests
 import os
+import re
+import fitz  # PyMuPDF
+import requests
+import mimetypes
+from dotenv import load_dotenv
 
 load_dotenv()
-import shutil
-# ==============================
-# Extract text functions
-# ==============================
+
+from .embedding import generate_embedding
+from .vector_store import add_text_to_vector_store
+
+# Extract text from PDF
 def extract_text_from_pdf(file_path):
     doc = fitz.open(file_path)
     text = ""
@@ -21,14 +19,9 @@ def extract_text_from_pdf(file_path):
         if page_text:
             text += f"\n[Page {page_number+1}]\n"
             text += page_text
-    # doc.close()
     return text
 
-# extract text from image
-import os
-import mimetypes
-import requests
-
+# Extract text from image (via OCR microservice)
 def extract_text_from_image(file_path):
     try:
         url = "https://ocr-microservice-02ej.onrender.com/api/ocr"
@@ -46,7 +39,6 @@ def extract_text_from_image(file_path):
 
         with open(file_path, "rb") as f:
             files = {"file": (filename, f, mime_type)}
-
             response = requests.post(url, files=files, timeout=180)
 
         print("OCR Status:", response.status_code)
@@ -62,28 +54,26 @@ def extract_text_from_image(file_path):
         print("OCR error:", e)
         return ""
 
-
-# extract text from .txt file
+# Extract text from TXT
 def extract_text_from_txt(file_path):
     with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
 
-# ==============================
-# Chunking function
-# ==============================
+# Chunk text
 def chunk_text(text, chunk_size=500, overlap=100):
     chunks = []
     start = 0
     while start < len(text):
         end = start + chunk_size
-        chunks.append(text[start:end])
+        chunk = text[start:end].strip()
+        if len(chunk) > 20 and re.search(r'[a-zA-Z]', chunk):
+            chunks.append(chunk)
         start += chunk_size - overlap
     return chunks
 
-# ==============================
-# Main ingestion
-# ==============================
+# Ingest document
 def ingest_document(file_path):
+    print("file path ....:: ", file_path)
     if not os.path.exists(file_path):
         return {"error": "File not found"}
 
@@ -101,17 +91,7 @@ def ingest_document(file_path):
         return {"error": "No text extracted"}
 
     chunks = chunk_text(text)
-
     for chunk in chunks:
         add_text_to_vector_store(chunk)
-#   # Robust deletion
-#     try:
-#         os.remove(file_path)
-#     except Exception as e:
-#         print(f"Warning: could not delete file {file_path}: {e}")
 
-    # try:
-    #     pytesseract.get_tesseract_version()
-    # except Exception as e:
-    #     print("Tesseract not installed:", e)
     return {"status": "success", "total_chunks": len(chunks)}
