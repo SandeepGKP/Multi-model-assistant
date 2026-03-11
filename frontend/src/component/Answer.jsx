@@ -4,6 +4,39 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
+const customStyle = {
+  ...oneDark,
+
+  'code[class*="language-"]': {
+    ...oneDark['code[class*="language-"]'],
+    color: "#38bdf8",   // same color for all code
+  },
+
+  'pre[class*="language-"]': {
+    ...oneDark['pre[class*="language-"]'],
+    color: "#e5e7eb",
+  },
+
+  comment: {
+    color: "#00ff00",   // different color only for comments
+    fontStyle: "italic",
+  },
+
+  keyword: { color: "#a855f7" },
+  string: { color: "#60a5fa" },
+  function: { color: "#38bdf8" },
+  number: { color: "#f59e0b" },
+  operator: { color: "#e5e7eb" },
+
+  boolean: { color: "#f472b6" },
+  variable: { color: "#facc15" },
+  "class-name": { color: "#60a5fa" },
+  property: { color: "#fb7185" },
+  parameter: { color: "#c084fc" },
+  punctuation: { color: "#9ca3af" },
+};
+
+
 const ViewAnswer = React.memo(({ content }) => {
   const safeContent = typeof content === "string" ? content : "";
   console.log("content type  : ", typeof content);
@@ -31,7 +64,7 @@ const ViewAnswer = React.memo(({ content }) => {
           </button>
           {/* Highlight as bash */}
           <SyntaxHighlighter
-            style={oneDark}
+            style={customStyle}
             language={match ? match[1] : "bash"}
             PreTag="div"
             customStyle={{
