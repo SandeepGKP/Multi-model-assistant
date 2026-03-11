@@ -18,7 +18,7 @@ const customStyle = {
   },
 
   comment: {
-    color: "#00ff00",   // different color only for comments
+    color: "#6A9955",   // different color only for comments
     fontStyle: "italic",
   },
 
