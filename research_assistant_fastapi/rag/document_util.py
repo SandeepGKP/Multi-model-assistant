@@ -41,14 +41,14 @@ def extract_text_from_image(file_path):
             files = {"file": (filename, f, mime_type)}
             response = requests.post(url, files=files, timeout=180)
 
-        print("OCR Status:", response.status_code)
-        print("OCR Response:", response.text)
+            print("OCR Status:", response.status_code)
+            print("OCR Response:", response.text)
 
-        if response.ok:
-            data = response.json()
-            return data.get("res", "")
+            if response.ok:
+                data = response.json()
+                return data.get("res", "")
 
-        return ""
+            return ""
 
     except Exception as e:
         print("OCR error:", e)
