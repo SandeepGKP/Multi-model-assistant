@@ -23,6 +23,10 @@ function Chat({ viewAnswer, setIsLoading }) {
             alert("Only one file can be uploaded at a time.");
             return;
         }
+        if(files.includes(selectedFile)){
+            alert("You already uploaded this file");
+            return;
+        }
         setFiles((prev) => [...prev, selectedFile.name]);
         if (!selectedFile) {
             return;

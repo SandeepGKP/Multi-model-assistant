@@ -34,7 +34,7 @@ def extract_text_from_image(file_path):
         mime_type, _ = mimetypes.guess_type(file_path)
         mime_type = mime_type or "image/png"
 
-        max_retries = 20
+        max_retries = 40
         delay = 3
 
         for attempt in range(max_retries):
