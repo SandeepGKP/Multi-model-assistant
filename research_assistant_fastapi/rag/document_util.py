@@ -4,7 +4,7 @@ import fitz  # PyMuPDF
 import requests
 import mimetypes
 from dotenv import load_dotenv
-
+import time
 load_dotenv()
 
 from .embedding import generate_embedding
@@ -34,25 +34,32 @@ def extract_text_from_image(file_path):
         mime_type, _ = mimetypes.guess_type(file_path)
         mime_type = mime_type or "image/png"
 
-        print("File:", filename)
-        print("Size:", os.path.getsize(file_path))
+        max_retries = 20
+        delay = 3
 
-        with open(file_path, "rb") as f:
-            files = {"file": (filename, f, mime_type)}
-            response = requests.post(url, files=files, timeout=180)
+        for attempt in range(max_retries):
+            try:
+                with open(file_path, "rb") as f:
+                    files = {"file": (filename, f, mime_type)}
+                    response = requests.post(url, files=files, timeout=120)
 
-            print("OCR Status:", response.status_code)
-            print("OCR Response:", response.text)
+                print("Attempt:", attempt + 1, "Status:", response.status_code)
 
-            if response.ok:
-                data = response.json()
-                return data.get("res", "")
+                if response.status_code == 200:
+                    data = response.json()
+                    return data.get("res", "")
 
-            return ""
+            except requests.exceptions.RequestException as e:
+                print("OCR not ready:", e)
+
+            time.sleep(delay)
+
+        print("OCR service did not wake in time")
+        return "OCR service failed to wake up due to render spin down problem"
 
     except Exception as e:
-        print("OCR error:", e)
-        return ""
+        print("OCR service failed to wake up due to render spin down problem")
+        return "Please try again...!"
 
 # Extract text from TXT
 def extract_text_from_txt(file_path):
