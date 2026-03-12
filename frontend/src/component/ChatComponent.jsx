@@ -19,12 +19,12 @@ function Chat({ viewAnswer, setIsLoading }) {
 
     const handleUpload = async (event) => {
         const selectedFile = event.target.files[0];
-        if (files.length >= 1) {
-            alert("Only one file can be uploaded at a time.");
-            return;
-        }
         if(files.includes(selectedFile)){
             alert("You already uploaded this file");
+            return;
+        }
+        if (files.length >= 1) {
+            alert("Only one file can be uploaded at a time.");
             return;
         }
         setFiles((prev) => [...prev, selectedFile.name]);
