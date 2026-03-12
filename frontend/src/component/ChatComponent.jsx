@@ -19,18 +19,22 @@ function Chat({ viewAnswer, setIsLoading }) {
 
     const handleUpload = async (event) => {
         const selectedFile = event.target.files[0];
-        if(files.includes(selectedFile)){
-            alert("You already uploaded this file");
-            return;
-        }
-        if (files.length >= 1) {
-            alert("Only one file can be uploaded at a time.");
-            return;
-        }
-        setFiles((prev) => [...prev, selectedFile.name]);
         if (!selectedFile) {
             return;
         }
+        if (files.includes(selectedFile)) {
+            alert("You already uploaded this file");
+            return;
+        }
+        setFiles((prev) => {
+            const updated = [...prev];
+
+            if (updated.length >= 10) {
+                updated.shift();
+            }
+
+            return [...updated, selectedFile.name];
+        });
         const allowedTypes = [
             "application/pdf",
             "image/jpeg",
