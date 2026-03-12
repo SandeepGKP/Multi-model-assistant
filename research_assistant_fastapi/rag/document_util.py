@@ -55,10 +55,9 @@ def extract_text_from_image(file_path):
             time.sleep(delay)
 
         print("OCR service did not wake in time")
-        return "OCR service failed to wake up due to render spin down problem"
+        return ""
 
     except Exception as e:
-        print("OCR service failed to wake up due to render spin down problem")
         return "Please try again...!"
 
 # Extract text from TXT
