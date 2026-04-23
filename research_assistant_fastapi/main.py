@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from rag.routes import router as rag_router
 from documents.routes import router as documents_router
-from documents.db import Base,engine
+
 from fastapi.middleware.cors import CORSMiddleware 
 import uvicorn,os
 # Create FastAPI app
@@ -18,7 +18,7 @@ app.add_middleware(
     allow_methods=["*"],  # allow GET, POST, OPTIONS, etc.
     allow_headers=["*"],
 )
-Base.metadata.create_all(bind=engine)
+
 
 # Register routers
 app.include_router(documents_router, prefix="/api/documents", tags=["documents"])
